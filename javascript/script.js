@@ -12,6 +12,7 @@ class Cooker {
         this.mouthTwoCooker = document.querySelector("#mouthTwo")
         this.mouthThreeCooker = document.querySelector("#mouthThree")
         this.mouthFourCooker = document.querySelector("#mouthFour")
+        this.stoveCooker = document.querySelector("#stove")
 
         this.mouthOneCooker.addEventListener("click", ()=> {
             this.changeState("mouthOne")           
@@ -27,6 +28,10 @@ class Cooker {
         })
         this.mouthFourCooker.addEventListener("click", ()=> {
             this.changeState("mouthFour")           
+            this.exibe()
+        })
+        this.stoveCooker.addEventListener("click", ()=> {
+            this.changeState("stove")           
             this.exibe()
         })
     }
@@ -45,15 +50,15 @@ class Cooker {
     }
 
     changeState(mouth) {
-        if (!this.powerSocket) {
-            console.log("Tomada desligada. Ligue-a primeiramente")
+        if (!this.powerSocket && !this[mouth]) {
+            console.log("Tomada desligada. Ligue-a primeiramente para acender a boca.")
             return
         }
         this[mouth] = !this[mouth]
     }
 
     exibe() {
-        console.log(this.mouthOne, this.mouthTwo, this.mouthThree, this.mouthFour);
+        console.log(this.mouthOne, this.mouthTwo, this.mouthThree, this.mouthFour, this.stove, this.powerSocket);
     }
 }
 
