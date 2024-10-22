@@ -2,11 +2,8 @@ class Cooker {
     constructor() {
         this.initialState()
 
-
         this.powerSocketCooker = document.querySelector("#powerSocket")
-        this.powerSocketCooker.addEventListener("click", ()=> {
-            this.changePowerSocket()
-        })
+        this.powerSocketCooker.addEventListener("click", ()=> {this.changePowerSocket()})
 
         this.spanPowerSocket = document.querySelector("#spanPowerSocket")
         this.mouthOneCooker = document.querySelector("#mouthOne")
@@ -15,21 +12,11 @@ class Cooker {
         this.mouthFourCooker = document.querySelector("#mouthFour")
         this.stoveCooker = document.querySelector("#stove")
 
-        this.mouthOneCooker.addEventListener("click", ()=> {
-            this.changeState("mouthOne")           
-        })
-        this.mouthTwoCooker.addEventListener("click", ()=> {
-            this.changeState("mouthTwo")           
-        })
-        this.mouthThreeCooker.addEventListener("click", ()=> {
-            this.changeState("mouthThree")           
-        })
-        this.mouthFourCooker.addEventListener("click", ()=> {
-            this.changeState("mouthFour")           
-        })
-        this.stoveCooker.addEventListener("click", ()=> {
-            this.changeState("stove")           
-        })
+        this.mouthOneCooker.addEventListener("click", ()=> {this.changeState("mouthOne")})
+        this.mouthTwoCooker.addEventListener("click", ()=> {this.changeState("mouthTwo")})
+        this.mouthThreeCooker.addEventListener("click", ()=> {this.changeState("mouthThree")})
+        this.mouthFourCooker.addEventListener("click", ()=> {this.changeState("mouthFour")})
+        this.stoveCooker.addEventListener("click", ()=> {this.changeState("stove")})
     }
 
     initialState() {
@@ -43,67 +30,42 @@ class Cooker {
 
     changePowerSocket() {
         this.powerSocket = !this.powerSocket
-        if (this.powerSocket) {
-            this.spanPowerSocket.innerHTML = `Tomada ligada`
-        } else {
-            this.spanPowerSocket.innerHTML = `Tomada desligada`
-        }
+        this.spanPowerSocket.innerHTML = this.powerSocket ? 'Tomada ligada' : 'Tomada desligada'
     }
 
     changeState(mouth) {
         if (!this.powerSocket && !this[mouth]) {
-            if (mouth == 'stove') {
-                this.spanPowerSocket.innerHTML = `Tomada desligada. Ligue-a primeiramente para acender o forno.`
-            } else {
-                this.spanPowerSocket.innerHTML = `Tomada desligada. Ligue-a primeiramente para acender a boca.`
-            }
-            return
+            this.deviceName = (mouth === 'stove') ? 'forno' : 'boca';
+            this.spanPowerSocket.innerHTML = `Tomada desligada. Ligue-a primeiramente para acender o ${this.deviceName}.`;
+            return;
         }
         this[mouth] = !this[mouth]
-        if (this[mouth]) {
-            this.spanScreen(mouth) 
-        } else {
-            this.spanScreenOff(mouth)
-        }
+        this[mouth] ? this.spanScreen(mouth) : this.spanScreenOff(mouth);
     }
 
     spanScreen(mouth) {
-        if (mouth == 'stove') {
-            this.spanPowerSocket.innerHTML = `Forno ligado`
-        } else if (mouth == 'mouthOne') {
-            this.value = '1'
-            this.spanPowerSocket.innerHTML = `Boca ${this.value} ligada`
-        } else if (mouth == 'mouthTwo') {
-            this.value = '2'
-            this.spanPowerSocket.innerHTML = `Boca ${this.value} ligada`
-        } else if (mouth == 'mouthThree') {
-            this.value = '3'
-            this.spanPowerSocket.innerHTML = `Boca ${this.value} ligada`
-        } else if (mouth == 'mouthFour') {
-            this.value = '4'
-            this.spanPowerSocket.innerHTML = `Boca ${this.value} ligada`
-        }
+        this.isStove = (mouth === 'stove');
+        this.deviceName = this.isStove ? 'Forno' : `Boca ${this.getMouthNumber(mouth)}`;
+        this.spanPowerSocket.innerHTML = `${this.deviceName} ligada`;
     }
 
     spanScreenOff(mouth) {
-        if (mouth == 'stove') {
-            this.spanPowerSocket.innerHTML = `Forno desligado`
-        } else if (mouth == 'mouthOne') {
-            this.value = '1'
-            this.spanPowerSocket.innerHTML = `Boca ${this.value} desligada`
-        } else if (mouth == 'mouthTwo') {
-            this.value = '2'
-            this.spanPowerSocket.innerHTML = `Boca ${this.value} desligada`
-        } else if (mouth == 'mouthThree') {
-            this.value = '3'
-            this.spanPowerSocket.innerHTML = `Boca ${this.value} desligada`
-        } else if (mouth == 'mouthFour') {
-            this.value = '4'
-            this.spanPowerSocket.innerHTML = `Boca ${this.value} desligada`
-        }
+        this.isStove = (mouth === 'stove');
+        this.deviceName = this.isStove ? 'Forno' : `Boca ${this.getMouthNumber(mouth)}`;
+        this.spanPowerSocket.innerHTML = `${this.deviceName} desligada`;
     }
 
-    exibe() {
+    getMouthNumber(mouth) {
+        this.mouthMap = {
+            mouthOne: '1',
+            mouthTwo: '2',
+            mouthThree: '3',
+            mouthFour: '4'
+        };
+        return this.mouthMap[mouth];
+    }
+
+    displays() {
         console.log(this.mouthOne, this.mouthTwo, this.mouthThree, this.mouthFour, this.stove, this.powerSocket);
     }
 }
