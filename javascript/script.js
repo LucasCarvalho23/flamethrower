@@ -8,6 +8,7 @@ class Cooker {
             this.changePowerSocket()
         })
 
+        this.spanPowerSocket = document.querySelector("#spanPowerSocket")
         this.mouthOneCooker = document.querySelector("#mouthOne")
         this.mouthTwoCooker = document.querySelector("#mouthTwo")
         this.mouthThreeCooker = document.querySelector("#mouthThree")
@@ -16,23 +17,18 @@ class Cooker {
 
         this.mouthOneCooker.addEventListener("click", ()=> {
             this.changeState("mouthOne")           
-            this.exibe()
         })
         this.mouthTwoCooker.addEventListener("click", ()=> {
             this.changeState("mouthTwo")           
-            this.exibe()
         })
         this.mouthThreeCooker.addEventListener("click", ()=> {
             this.changeState("mouthThree")           
-            this.exibe()
         })
         this.mouthFourCooker.addEventListener("click", ()=> {
             this.changeState("mouthFour")           
-            this.exibe()
         })
         this.stoveCooker.addEventListener("click", ()=> {
             this.changeState("stove")           
-            this.exibe()
         })
     }
 
@@ -47,14 +43,64 @@ class Cooker {
 
     changePowerSocket() {
         this.powerSocket = !this.powerSocket
+        if (this.powerSocket) {
+            this.spanPowerSocket.innerHTML = `Tomada ligada`
+        } else {
+            this.spanPowerSocket.innerHTML = `Tomada desligada`
+        }
     }
 
     changeState(mouth) {
         if (!this.powerSocket && !this[mouth]) {
-            console.log("Tomada desligada. Ligue-a primeiramente para acender a boca.")
+            if (mouth == 'stove') {
+                this.spanPowerSocket.innerHTML = `Tomada desligada. Ligue-a primeiramente para acender o forno.`
+            } else {
+                this.spanPowerSocket.innerHTML = `Tomada desligada. Ligue-a primeiramente para acender a boca.`
+            }
             return
         }
         this[mouth] = !this[mouth]
+        if (this[mouth]) {
+            this.spanScreen(mouth) 
+        } else {
+            this.spanScreenOff(mouth)
+        }
+    }
+
+    spanScreen(mouth) {
+        if (mouth == 'stove') {
+            this.spanPowerSocket.innerHTML = `Forno ligado`
+        } else if (mouth == 'mouthOne') {
+            this.value = '1'
+            this.spanPowerSocket.innerHTML = `Boca ${this.value} ligada`
+        } else if (mouth == 'mouthTwo') {
+            this.value = '2'
+            this.spanPowerSocket.innerHTML = `Boca ${this.value} ligada`
+        } else if (mouth == 'mouthThree') {
+            this.value = '3'
+            this.spanPowerSocket.innerHTML = `Boca ${this.value} ligada`
+        } else if (mouth == 'mouthFour') {
+            this.value = '4'
+            this.spanPowerSocket.innerHTML = `Boca ${this.value} ligada`
+        }
+    }
+
+    spanScreenOff(mouth) {
+        if (mouth == 'stove') {
+            this.spanPowerSocket.innerHTML = `Forno desligado`
+        } else if (mouth == 'mouthOne') {
+            this.value = '1'
+            this.spanPowerSocket.innerHTML = `Boca ${this.value} desligada`
+        } else if (mouth == 'mouthTwo') {
+            this.value = '2'
+            this.spanPowerSocket.innerHTML = `Boca ${this.value} desligada`
+        } else if (mouth == 'mouthThree') {
+            this.value = '3'
+            this.spanPowerSocket.innerHTML = `Boca ${this.value} desligada`
+        } else if (mouth == 'mouthFour') {
+            this.value = '4'
+            this.spanPowerSocket.innerHTML = `Boca ${this.value} desligada`
+        }
     }
 
     exibe() {
