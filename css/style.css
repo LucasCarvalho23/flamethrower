@@ -1,2 +1,20 @@
 @charset "UTF-8";
 
+/*
+
+    MENU:
+    - *
+    - A, H1, P, ETC...
+    - ROOT 
+    - INDEX
+
+*/
+
+
+a {
+    text-decoration: none;
+}
+
+.container-image {
+    padding-top: 200px;
+}
